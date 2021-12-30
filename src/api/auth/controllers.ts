@@ -1,7 +1,7 @@
 import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
 import config from "../../config";
-import { User } from "../user/models";
+import UserModel from "../user/models";
 
 let tokenList = [];
 interface AuthToken {
@@ -15,7 +15,7 @@ export async function login(
   username: string,
   password: string
 ): Promise<AuthToken> {
-  const user = await User.findOne({ where: { username } });
+  const user = await UserModel.findOne({ where: { username } });
   if (user) {
     const validPassword = bcrypt.compareSync(password, user.get().password);
     if (validPassword) {

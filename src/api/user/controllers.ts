@@ -1,5 +1,4 @@
-import { Model } from "sequelize/dist";
-import { User } from "./models";
+import UserModel from "./models";
 
 interface UserInterface {
   username: string;
@@ -10,7 +9,7 @@ interface UserInterface {
 export async function createUser(user: UserInterface): Promise<boolean> {
   const { username, email, password } = user;
   try {
-    await User.create({
+    await UserModel.create({
       username,
       email,
       password,
@@ -22,30 +21,33 @@ export async function createUser(user: UserInterface): Promise<boolean> {
   }
 }
 
-export async function deleteUser(userId: string): Promise<Model> {
+export async function deleteUser(userId: string): Promise<any> {
   try {
-    const userToDelete = await User.findOne({ where: { userId } });
-    userToDelete.destroy;
+    const userToDelete = await UserModel.findOne({ where: { userId } });
+    userToDelete.destroy();
     return userToDelete.get();
   } catch (error) {
     console.log(error);
+    return "fail";
   }
 }
 
-export async function getAllUsers(): Promise<Model[]> {
+export async function getAllUsers(): Promise<any> {
   try {
-    const allUsers = await User.findAll();
+    const allUsers = await UserModel.findAll();
     return allUsers;
   } catch (error) {
     console.log(error);
+    return "fail";
   }
 }
 
-export async function getUser(userId: string): Promise<Model> {
+export async function getUser(userId: string): Promise<any> {
   try {
-    const user = await User.findOne({ where: { userId } });
+    const user = await UserModel.findOne({ where: { userId } });
     return user.get();
   } catch (error) {
     console.log(error);
+    return "fail";
   }
 }

@@ -3,7 +3,7 @@ import bodyParser from "body-parser";
 import cors from "cors";
 import config from "./config";
 import api from "./api";
-import sequelize from "./api/sequelize";
+import { sequelize } from "./api/sequelize";
 
 const { port } = config.app;
 const app = express();
