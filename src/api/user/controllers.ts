@@ -1,52 +1,51 @@
-import {Model} from "sequelize/dist"
-import {User} from "./models"
+import { Model } from "sequelize/dist";
+import { User } from "./models";
 
 interface UserInterface {
-  username: string
-  email: string
-  password: string
+  username: string;
+  email: string;
+  password: string;
 }
 
-export async function createUser(user: UserInterface):Promise<Model> {
-  const {username, email, password} = user
+export async function createUser(user: UserInterface): Promise<boolean> {
+  const { username, email, password } = user;
   try {
-    const ryan = await User.create({
+    await User.create({
       username,
       email,
       password,
-    })
-    return ryan.get()
-  } catch(error) {
-    console.log(error)
+    });
+    return true;
+  } catch (error) {
+    console.log(error);
+    return false;
   }
 }
 
-export async function deleteUser(userId: string):Promise<Model> {
+export async function deleteUser(userId: string): Promise<Model> {
   try {
-    const userToDelete = await User.findOne({ where: { userId: userId}})
-    userToDelete.destroy
-    return userToDelete.get()
-  } catch(error) {
-    console.log(error)
+    const userToDelete = await User.findOne({ where: { userId } });
+    userToDelete.destroy;
+    return userToDelete.get();
+  } catch (error) {
+    console.log(error);
   }
 }
 
-export async function getAllUsers():Promise<Model[]> {
+export async function getAllUsers(): Promise<Model[]> {
   try {
-    const allUsers = await User.findAll()
-    return allUsers
-  } catch(error) {
-    console.log(error)
+    const allUsers = await User.findAll();
+    return allUsers;
+  } catch (error) {
+    console.log(error);
   }
 }
 
-export async function getUser(userId: string):Promise<Model> {
+export async function getUser(userId: string): Promise<Model> {
   try {
-    const user = await User.findOne({where: {userId: userId}})
-    return user.get()
-  } catch(error) {
-    console.log(error)
+    const user = await User.findOne({ where: { userId } });
+    return user.get();
+  } catch (error) {
+    console.log(error);
   }
 }
-
-

@@ -1,14 +1,13 @@
-import express from 'express'
+import express from "express";
 
-const router = express.Router()
+const router = express.Router();
 
-router.get('/', async (req, res) => {
-  return res.json('transaction route')
-})
+router.get("/", async (req, res) => {
+  return res.json("transaction route");
+});
 
-router.get('/example',async (_, res) => {
-  return res.json('transaction example')
-})
+router.get("/example", async (_, res) => {
+  return res.json("transaction example");
+});
 
-
-export { router as transaction }
+export default router;

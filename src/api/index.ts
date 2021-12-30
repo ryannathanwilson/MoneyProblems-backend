@@ -1,13 +1,13 @@
-import express from 'express'
-import {auth} from './auth/routes'
-import { transaction } from './transaction/routes'
-import { user } from './user/routes'
+import express from "express";
+import auth from "./auth/routes";
+import transaction from "./transaction/routes";
+import user from "./user/routes";
 
-const router = express.Router()
+const router = express.Router();
 
-router.use('/auth', auth)
-router.use('/transaction', transaction)
-router.use('/user', user)
+router.use("/auth", auth);
+router.use("/transaction", transaction);
+router.use("/user", user);
 
-router.get('/')
-export {router as api}
+router.get("/");
+export default router;
