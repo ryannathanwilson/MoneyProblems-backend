@@ -1,5 +1,5 @@
 import { DataTypes, UUIDV4 } from "sequelize";
-// import BudgetModel from "../budget/models";
+import BudgetModel from "../budget/models";
 import { sequelize, commonModelOption } from "../sequelize";
 
 const CategoryModel = sequelize.define(
@@ -20,7 +20,7 @@ const CategoryModel = sequelize.define(
     ...commonModelOption,
   }
 );
-// CategoryModel.hasMany(BudgetModel, { foreignKey: "categoryId" });
-// BudgetModel.belongsTo(CategoryModel, { foreignKey: "categoryId" });
+CategoryModel.hasMany(BudgetModel, { foreignKey: "categoryId" });
+BudgetModel.belongsTo(CategoryModel, { foreignKey: "categoryId" });
 
 export default CategoryModel;

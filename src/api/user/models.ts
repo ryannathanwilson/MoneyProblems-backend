@@ -1,6 +1,8 @@
 import { DataTypes, UUIDV4 } from "sequelize";
 import bcrypt from "bcrypt";
 import { sequelize } from "../sequelize";
+import BudgetModel from "../budget/models";
+import CategoryModel from "../category/models";
 
 const UserModel = sequelize.define(
   "user",
@@ -37,5 +39,11 @@ const UserModel = sequelize.define(
     },
   }
 );
+
+UserModel.hasMany(CategoryModel, { foreignKey: "userId" });
+CategoryModel.belongsTo(UserModel, { foreignKey: "userId" });
+
+UserModel.hasMany(BudgetModel, { foreignKey: "userId" });
+BudgetModel.belongsTo(UserModel, { foreignKey: "userId" });
 
 export default UserModel;

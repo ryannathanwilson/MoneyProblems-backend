@@ -1,4 +1,4 @@
-import CategoryModel from "./model";
+import CategoryModel from "./models";
 
 export async function createCategory(
   userId: string,

@@ -12,17 +12,17 @@ router.get("/", async (req, res) => {
   return res.json(response);
 });
 
-// router.post("/", async (req, res) => {
-//   const { userId } = req.user;
-//   const { categoryId, amount, year, month } = req.body;
-//   const response = await createBudget(userId, categoryId, amount, year, month);
-//   return res.json(response);
-// });
+router.post("/", async (req, res) => {
+  const { userId } = req.user;
+  const { categoryId, amount, year, month } = req.body;
+  const response = await createBudget(userId, categoryId, amount, year, month);
+  return res.json(response);
+});
 
-// router.delete("/:budgetId", async (req, res) => {
-//   const response = await deleteBudget(req.params.budgetId);
-//   return res.json(response);
-// });
+router.delete("/:budgetId", async (req, res) => {
+  const response = await deleteBudget(req.params.budgetId);
+  return res.json(response);
+});
 
 const budget = router;
 export default budget;
