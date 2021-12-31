@@ -1,3 +1,4 @@
+import { NextFunction } from "express";
 import BudgetModel from "./models";
 
 export async function createBudget(
@@ -5,20 +6,20 @@ export async function createBudget(
   categoryId: string,
   amount: number,
   month: number,
-  year: number
-): Promise<boolean> {
+  year: number,
+  next: NextFunction
+): Promise<any> {
   try {
-    await BudgetModel.create({
+    const newBudgetItem = await BudgetModel.create({
       userId,
       categoryId,
       amount,
       month,
       year,
     });
-    return true;
+    return newBudgetItem.get();
   } catch (error) {
-    console.log(error);
-    return false;
+    return next(error);
   }
 }
 

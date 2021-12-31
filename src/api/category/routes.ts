@@ -16,10 +16,10 @@ router.get("/", async (req, res) => {
   return res.json(response);
 });
 
-router.post("/", async (req, res) => {
+router.post("/", async (req, res, next) => {
   const { userId } = req.user;
   const { category } = req.body;
-  const response = await createCategory(userId, category);
+  const response = await createCategory(userId, category, next);
   return res.json(response);
 });
 

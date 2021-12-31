@@ -3,6 +3,7 @@ import bcrypt from "bcrypt";
 import { sequelize } from "../sequelize";
 import BudgetModel from "../budget/models";
 import CategoryModel from "../category/models";
+import TransactionModel from "../transaction/models";
 
 const UserModel = sequelize.define(
   "user",
@@ -45,5 +46,8 @@ CategoryModel.belongsTo(UserModel, { foreignKey: "userId" });
 
 UserModel.hasMany(BudgetModel, { foreignKey: "userId" });
 BudgetModel.belongsTo(UserModel, { foreignKey: "userId" });
+
+UserModel.hasMany(TransactionModel, { foreignKey: "userId" });
+TransactionModel.belongsTo(UserModel, { foreignKey: "userId" });
 
 export default UserModel;

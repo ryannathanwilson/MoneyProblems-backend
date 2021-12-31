@@ -15,7 +15,10 @@ export async function login(
   username: string,
   password: string
 ): Promise<AuthToken> {
-  const user = await UserModel.findOne({ where: { username } });
+  const user = await UserModel.findOne({
+    where: { username },
+  });
+  console.log(user);
   if (user) {
     const validPassword = bcrypt.compareSync(password, user.get().password);
     if (validPassword) {

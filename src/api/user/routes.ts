@@ -15,10 +15,10 @@ router.get("/:userId", async (req, res) => {
   return res.json(response);
 });
 
-router.post("/", async (req, res) => {
+router.post("/", async (req, res, next) => {
   const user = req.body;
   console.log(user);
-  const response = await createUser(user);
+  const response = await createUser(user, next);
   return res.json(response);
 });
 

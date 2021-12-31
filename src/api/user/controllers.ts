@@ -1,3 +1,5 @@
+import { NextFunction } from "express";
+import { Model } from "sequelize/dist";
 import UserModel from "./models";
 
 interface UserInterface {
@@ -6,18 +8,21 @@ interface UserInterface {
   password: string;
 }
 
-export async function createUser(user: UserInterface): Promise<boolean> {
+export async function createUser(
+  user: UserInterface,
+  next: NextFunction
+): Promise<Model | void> {
   const { username, email, password } = user;
   try {
-    await UserModel.create({
+    const newUser = await UserModel.create({
       username,
       email,
       password,
     });
-    return true;
+    delete newUser.get().password;
+    return newUser.get();
   } catch (error) {
-    console.log(error);
-    return false;
+    return next(error);
   }
 }
 

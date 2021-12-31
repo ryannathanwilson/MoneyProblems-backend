@@ -12,10 +12,17 @@ router.get("/", async (req, res) => {
   return res.json(response);
 });
 
-router.post("/", async (req, res) => {
+router.post("/", async (req, res, next) => {
   const { userId } = req.user;
   const { categoryId, amount, year, month } = req.body;
-  const response = await createBudget(userId, categoryId, amount, year, month);
+  const response = await createBudget(
+    userId,
+    categoryId,
+    amount,
+    year,
+    month,
+    next
+  );
   return res.json(response);
 });
 

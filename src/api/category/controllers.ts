@@ -1,20 +1,22 @@
+import { NextFunction } from "express";
 import CategoryModel from "./models";
 
 export async function createCategory(
   userId: string,
-  category: string
-): Promise<boolean> {
+  category: string,
+  next: NextFunction
+): Promise<any> {
   console.log(`user: ${userId}`);
   console.log(`category: ${category}`);
   try {
-    await CategoryModel.create({
+    const newCategory = await CategoryModel.create({
       userId,
       category,
     });
-    return true;
+    return newCategory.get();
   } catch (error) {
     console.log(error);
-    return false;
+    return next(error);
   }
 }
 
