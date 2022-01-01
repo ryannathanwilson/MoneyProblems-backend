@@ -1,26 +1,37 @@
 import express from "express";
 import { checkJWT } from "../../utilites";
-import { createBudget, deleteBudget, getAllBudgetsByUser } from "./controllers";
+import {
+  createBudget,
+  deleteBudget,
+  getAllBudgetsByUser,
+  getBudgetByMonth,
+} from "./controllers";
 
 const router = express.Router();
 router.use(checkJWT);
 
 router.get("/", async (req, res) => {
   const { userId } = req.user;
-  console.log(userId);
   const response = await getAllBudgetsByUser(userId);
+  return res.json(response);
+});
+
+router.get("/by-year/:year", async (req, res, next) => {
+  const { userId } = req.user;
+  const { year } = req.params;
+  const response = await getBudgetByMonth(year, userId, next);
   return res.json(response);
 });
 
 router.post("/", async (req, res, next) => {
   const { userId } = req.user;
-  const { categoryId, amount, year, month } = req.body;
+  const { categoryId, amount, month, year } = req.body;
   const response = await createBudget(
     userId,
     categoryId,
     amount,
-    year,
     month,
+    year,
     next
   );
   return res.json(response);

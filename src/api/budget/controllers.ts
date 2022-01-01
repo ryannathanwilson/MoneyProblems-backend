@@ -35,7 +35,6 @@ export async function deleteBudget(budgetId: string): Promise<any> {
 }
 
 export async function getAllBudgetsByUser(userId: string): Promise<any> {
-  console.log(`userId: ${userId}`);
   try {
     const allBudgets = await BudgetModel.findAll({
       where: {
@@ -46,5 +45,24 @@ export async function getAllBudgetsByUser(userId: string): Promise<any> {
   } catch (error) {
     console.log(error);
     return "call failed";
+  }
+}
+
+export async function getBudgetByMonth(
+  year: string,
+  userId: string,
+  next: NextFunction
+): Promise<any> {
+  try {
+    const allBudgets = await BudgetModel.findAll({
+      where: {
+        userId,
+        year,
+      },
+    });
+    return allBudgets;
+  } catch (error) {
+    console.log(error);
+    return next(error);
   }
 }

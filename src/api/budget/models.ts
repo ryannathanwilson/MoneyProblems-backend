@@ -6,21 +6,30 @@ const BudgetModel = sequelize.define(
   {
     budgetId: {
       type: DataTypes.UUID,
-      primaryKey: true,
       defaultValue: UUIDV4,
       unique: true,
     },
+    userId: {
+      type: DataTypes.UUID,
+      primaryKey: true,
+    },
+    categoryId: {
+      type: DataTypes.UUID,
+      primaryKey: true,
+    },
     amount: {
-      type: DataTypes.DECIMAL(10, 2),
+      type: DataTypes.INTEGER,
       allowNull: false,
     },
     month: {
       type: DataTypes.INTEGER,
       allowNull: false,
+      primaryKey: true,
     },
     year: {
       type: DataTypes.INTEGER,
       allowNull: false,
+      primaryKey: true,
     },
   },
   {

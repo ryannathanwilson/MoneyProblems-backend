@@ -18,6 +18,10 @@ const TransactionModel = sequelize.define(
       type: DataTypes.DATE,
       allowNull: false,
     },
+    year: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+    },
   },
   {
     ...commonModelOption,
