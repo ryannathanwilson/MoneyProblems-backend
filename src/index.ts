@@ -1,12 +1,12 @@
 import express from "express";
 import bodyParser from "body-parser";
 import cors from "cors";
-import config from "./config";
 import api from "./api";
 import { sequelize } from "./api/sequelize";
 
-const { port } = config.app;
+const port = process.env.PORT || 3001;
 const app = express();
+
 (async () => {
   await sequelize.authenticate();
   await sequelize.createSchema("rnw", { logging: false });
