@@ -12,6 +12,7 @@ export interface Config {
     saltRounds: number;
   };
   db: {
+    dbURL: string;
     database: string;
     host: string;
     password: string;
@@ -38,6 +39,7 @@ const config: Config = {
     saltRounds: parseInt(process.env.SALT_ROUNDS, 10),
   },
   db: {
+    dbURL: process.env.DATABASE_URL,
     database: process.env.DB_DATABASE,
     host: process.env.DB_HOST,
     password: process.env.DB_PASSWORD,
