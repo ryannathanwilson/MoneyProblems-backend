@@ -6,7 +6,7 @@ export async function createTransaction(
   categoryId: string,
   amount: number,
   date: Date,
-  year: number
+  year: number,
   next: NextFunction
 ): Promise<any> {
   try {
