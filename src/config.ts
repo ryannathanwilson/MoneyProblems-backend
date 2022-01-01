@@ -28,7 +28,7 @@ export interface Config {
 
 const config: Config = {
   app: {
-    port: parseInt(process.env.APP_PORT, 10),
+    port: parseInt(process.env.PORT, 10),
   },
   auth: {
     accessSecret: process.env.JWT_ACCESS_SECRET,
