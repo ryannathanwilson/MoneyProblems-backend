@@ -16,6 +16,7 @@ export interface Config {
     database: string;
     host: string;
     password: string;
+    ssl: boolean;
     pool: {
       max: number;
       min: number;
@@ -39,6 +40,7 @@ const config: Config = {
     saltRounds: parseInt(process.env.SALT_ROUNDS, 10),
   },
   db: {
+    ssl: JSON.parse(process.env.PGSSLMODE),
     dbURL: process.env.DATABASE_URL,
     database: process.env.DB_DATABASE,
     host: process.env.DB_HOST,

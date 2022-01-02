@@ -9,6 +9,15 @@ export const commonModelOption: ModelOptions = {
 export const sequelize = new Sequelize(config.db.dbURL, {
   host: config.db.host,
   dialect: "postgres",
+  dialectOptions: config.db.ssl
+    ? {
+        ssl: {
+          require: config.db.ssl,
+          rejectUnauthorized: false,
+        },
+      }
+    : {},
+  ssl: config.db.ssl,
   pool: {
     max: config.db.pool.max,
     min: config.db.pool.min,
