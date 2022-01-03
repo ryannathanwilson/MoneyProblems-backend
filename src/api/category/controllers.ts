@@ -7,8 +7,6 @@ export async function createCategory(
   category: string,
   next: NextFunction
 ): Promise<any> {
-  console.log(`user: ${userId}`);
-  console.log(`category: ${category}`);
   try {
     const newCategory = await CategoryModel.create({
       userId,
@@ -16,7 +14,6 @@ export async function createCategory(
     });
     return newCategory.get();
   } catch (error) {
-    console.log(error);
     return next(error);
   }
 }
@@ -46,7 +43,7 @@ export async function getAllCategoriesByUser(
       where: {
         userId,
       },
-      order: ["category", "ASC"],
+      order: [["category", "ASC"]],
     });
     return allCategories;
   } catch (error) {
