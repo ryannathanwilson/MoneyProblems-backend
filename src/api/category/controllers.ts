@@ -1,4 +1,5 @@
 import { NextFunction } from "express";
+import { Error } from "sequelize";
 import CategoryModel from "./models";
 
 export async function createCategory(
@@ -20,7 +21,11 @@ export async function createCategory(
   }
 }
 
-export async function deleteCategory(categoryId: string): Promise<any> {
+export async function deleteCategory(
+  categoryId: string,
+  userId: string,
+  next: NextFunction
+): Promise<any> {
   try {
     const categoryToDelete = await CategoryModel.findOne({
       where: { categoryId },
@@ -28,22 +33,46 @@ export async function deleteCategory(categoryId: string): Promise<any> {
     categoryToDelete.destroy();
     return categoryToDelete.get();
   } catch (error) {
-    console.log(error);
-    return "failed to delete";
+    return next(error);
   }
 }
 
-export async function getAllCategoriesByUser(userId: string): Promise<any> {
-  console.log(`userId: ${userId}`);
+export async function getAllCategoriesByUser(
+  userId: string,
+  next: NextFunction
+): Promise<any> {
   try {
     const allCategories = await CategoryModel.findAll({
       where: {
         userId,
       },
+      order: ["category", "ASC"],
     });
     return allCategories;
   } catch (error) {
-    return "call failed";
-    console.log(error);
+    return next(error);
+  }
+}
+
+export async function updateCategory(
+  userId: string,
+  categoryId: string,
+  updateObject: any,
+  next: NextFunction
+) {
+  try {
+    const categoryToUpdate = await CategoryModel.findOne({
+      where: {
+        categoryId,
+        userId,
+      },
+    });
+    if (categoryToUpdate) {
+      const updatedCategory = await categoryToUpdate.update(updateObject);
+      return updatedCategory.get();
+    }
+    throw Error;
+  } catch (error) {
+    return next(error);
   }
 }

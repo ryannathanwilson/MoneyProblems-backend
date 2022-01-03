@@ -4,15 +4,15 @@ import {
   createCategory,
   deleteCategory,
   getAllCategoriesByUser,
+  updateCategory,
 } from "./controllers";
 
 const router = express.Router();
 router.use(checkJWT);
 
-router.get("/", async (req, res) => {
+router.get("/", async (req, res, next) => {
   const { userId } = req.user;
-  console.log(userId);
-  const response = await getAllCategoriesByUser(userId);
+  const response = await getAllCategoriesByUser(userId, next);
   return res.json(response);
 });
 
@@ -23,8 +23,21 @@ router.post("/", async (req, res, next) => {
   return res.json(response);
 });
 
-router.delete("/:categoryId", async (req, res) => {
-  const response = await deleteCategory(req.params.categoryId);
+router.delete("/delete/:categoryId", async (req, res, next) => {
+  const { userId } = req.user;
+  const response = await deleteCategory(req.params.categoryId, userId, next);
+  return res.json(response);
+});
+
+router.patch("/update/:categoryId", async (req, res, next) => {
+  const { userId } = req.user;
+  const categoryDetailsToUpdate = req.body;
+  const response = await updateCategory(
+    userId,
+    req.params.categoryId,
+    categoryDetailsToUpdate,
+    next
+  );
   return res.json(response);
 });
 
