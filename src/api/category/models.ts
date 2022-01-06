@@ -6,14 +6,18 @@ import TransactionModel from "../transaction/models";
 const CategoryModel = sequelize.define(
   "category",
   {
-    categoryId: {
+    userId: {
       type: DataTypes.UUID,
       primaryKey: true,
+    },
+    categoryId: {
+      type: DataTypes.UUID,
       defaultValue: UUIDV4,
       unique: true,
     },
     category: {
       type: DataTypes.STRING,
+      primaryKey: true,
       allowNull: false,
     },
   },

@@ -25,7 +25,7 @@ export async function deleteCategory(
 ): Promise<any> {
   try {
     const categoryToDelete = await CategoryModel.findOne({
-      where: { categoryId },
+      where: { categoryId, userId },
     });
     categoryToDelete.destroy();
     return categoryToDelete.get();
@@ -58,17 +58,14 @@ export async function updateCategory(
   next: NextFunction
 ) {
   try {
-    const categoryToUpdate = await CategoryModel.findOne({
+    const categoryToUpdate = await CategoryModel.update(updateObject, {
+      returning: true,
       where: {
         categoryId,
         userId,
       },
     });
-    if (categoryToUpdate) {
-      const updatedCategory = await categoryToUpdate.update(updateObject);
-      return updatedCategory.get();
-    }
-    throw Error;
+    return categoryToUpdate[1][0];
   } catch (error) {
     return next(error);
   }
