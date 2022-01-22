@@ -10,8 +10,8 @@ const app = express();
 (async () => {
   await sequelize.authenticate();
   await sequelize.createSchema("rnw", { logging: false });
-  await sequelize.sync({ force: true });
-  // await sequelize.sync();
+  // await sequelize.sync({ force: true });
+  await sequelize.sync();
 
   app.use(
     cors({

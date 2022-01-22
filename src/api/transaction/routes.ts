@@ -25,11 +25,12 @@ router.get("/by-year/:year/", async (req, res, next) => {
 
 router.post("/", async (req, res, next) => {
   const { userId } = req.user;
-  const { categoryId, amount, date, year } = req.body;
+  const { categoryId, amount, note, date, year } = req.body;
   const response = await createTransaction(
     userId,
     categoryId,
     amount,
+    note,
     date,
     year,
     next
@@ -37,9 +38,13 @@ router.post("/", async (req, res, next) => {
   return res.json(response);
 });
 
-router.delete("/:budgetId", async (req, res, next) => {
+router.delete("/:transactionId", async (req, res, next) => {
   const { userId } = req.user;
-  const response = await deleteTransaction(req.params.budgetId, userId, next);
+  const response = await deleteTransaction(
+    req.params.transactionId,
+    userId,
+    next
+  );
   return res.json(response);
 });
 

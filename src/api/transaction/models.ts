@@ -14,6 +14,10 @@ const TransactionModel = sequelize.define(
       type: DataTypes.DECIMAL(10, 2),
       allowNull: false,
     },
+    note: {
+      type: DataTypes.STRING(1000),
+      allowNull: false,
+    },
     date: {
       type: DataTypes.DATE,
       allowNull: false,

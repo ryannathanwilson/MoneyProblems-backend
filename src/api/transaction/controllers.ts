@@ -1,10 +1,12 @@
 import { NextFunction } from "express";
+import CategoryModel from "../category/models";
 import TransactionModel from "./models";
 
 export async function createTransaction(
   userId: string,
   categoryId: string,
   amount: number,
+  note: string,
   date: Date,
   year: number,
   next: NextFunction
@@ -14,6 +16,7 @@ export async function createTransaction(
       userId,
       categoryId,
       amount,
+      note,
       date,
       year,
     });
@@ -24,13 +27,13 @@ export async function createTransaction(
 }
 
 export async function deleteTransaction(
-  budgetId: string,
+  transactionId: string,
   userId: string,
   next: NextFunction
 ): Promise<any> {
   try {
     const transactionToDelete = await TransactionModel.findOne({
-      where: { budgetId },
+      where: { transactionId, userId },
     });
     transactionToDelete.destroy();
     return transactionToDelete.get();
@@ -50,6 +53,13 @@ export async function getTransactionsByYear(
         userId,
         year,
       },
+      include: [
+        {
+          model: CategoryModel,
+          attributes: ["categoryId", "category"],
+        },
+      ],
+      order: [["date", "DESC"]],
     });
     return allTransaction;
   } catch (error) {
@@ -66,6 +76,7 @@ export async function getAllTransactionsByUser(
       where: {
         userId,
       },
+      order: [["date", "DESC"]],
     });
     return allTransaction;
   } catch (error) {
