@@ -83,3 +83,23 @@ export async function getAllTransactionsByUser(
     return next(error);
   }
 }
+
+export async function updateTransaction(
+  userId: string,
+  transactionId: string,
+  updateObject: any,
+  next: NextFunction
+) {
+  try {
+    const transactionToUpdate = await TransactionModel.update(updateObject, {
+      returning: true,
+      where: {
+        transactionId,
+        userId,
+      },
+    });
+    return transactionToUpdate[1][0];
+  } catch (error) {
+    return next(error);
+  }
+}

@@ -5,6 +5,7 @@ import {
   deleteTransaction,
   getAllTransactionsByUser,
   getTransactionsByYear,
+  updateTransaction,
 } from "./controllers";
 
 const router = express.Router();
@@ -48,5 +49,16 @@ router.delete("/:transactionId", async (req, res, next) => {
   return res.json(response);
 });
 
+router.patch("/update/:transactionId", async (req, res, next) => {
+  const { userId } = req.user;
+  const transactionDetailsToUpdate = req.body;
+  const response = await updateTransaction(
+    userId,
+    req.params.transactionId,
+    transactionDetailsToUpdate,
+    next
+  );
+  return res.json(response);
+});
 const budget = router;
 export default budget;
