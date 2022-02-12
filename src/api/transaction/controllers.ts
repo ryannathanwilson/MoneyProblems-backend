@@ -53,12 +53,12 @@ export async function getTransactionsByYear(
         userId,
         year,
       },
-      include: [
-        {
-          model: CategoryModel,
-          attributes: ["categoryId", "category"],
-        },
-      ],
+      // include: [
+      // {
+      // model: CategoryModel,
+      // attributes: ["categoryId", "category"],
+      // },
+      // ],
       order: [["date", "DESC"]],
     });
     return allTransaction;

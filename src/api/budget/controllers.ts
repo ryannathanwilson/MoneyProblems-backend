@@ -1,4 +1,5 @@
 import { NextFunction } from "express";
+import CategoryModel from "../category/models";
 import BudgetModel from "./models";
 
 export async function createBudget(
@@ -48,7 +49,7 @@ export async function getAllBudgetsByUser(userId: string): Promise<any> {
   }
 }
 
-export async function getBudgetByMonth(
+export async function getBudgetByYear(
   year: string,
   userId: string,
   next: NextFunction
@@ -59,10 +60,63 @@ export async function getBudgetByMonth(
         userId,
         year,
       },
+      include: [
+        {
+          model: CategoryModel,
+          as: "category",
+        },
+      ],
     });
     return allBudgets;
   } catch (error) {
     console.log(error);
+    return next(error);
+  }
+}
+
+export async function getBudgetByMonth(
+  month: string,
+  year: string,
+  userId: string,
+  next: NextFunction
+): Promise<any> {
+  try {
+    const allBudgets = await BudgetModel.findAll({
+      where: {
+        userId,
+        year,
+        month,
+      },
+      // include: [
+      // {
+      // model: CategoryModel,
+      // as: "category",
+      // },
+      // ],
+    });
+    return allBudgets;
+  } catch (error) {
+    console.log(error);
+    return next(error);
+  }
+}
+
+export async function updateBudget(
+  userId: string,
+  budgetId: string,
+  updateObject: any,
+  next: NextFunction
+) {
+  try {
+    const budgetToUpdate = await BudgetModel.update(updateObject, {
+      returning: true,
+      where: {
+        budgetId,
+        userId,
+      },
+    });
+    return budgetToUpdate[1][0];
+  } catch (error) {
     return next(error);
   }
 }
