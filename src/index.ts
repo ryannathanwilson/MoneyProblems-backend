@@ -18,6 +18,7 @@ const app = express();
       origin: [
         "http://localhost:3000",
         "https://momoneymoproblems.netlify.app",
+        "https://mo-money-dev.netlify.app",
       ],
     })
   );
